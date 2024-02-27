@@ -6,8 +6,7 @@ class Config(object):
     SECRET_KEY = 'Clave nueva'
     SESSION_COOKIE_SECURE = False
 
-
-class DevelopmentCongig(Config):
+class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_UTL = 'mysql+pymysql://root:Soporte2003:root@127.0.0.1/bdidgs801'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:Soporte2003@localhost/bdidgs801'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
