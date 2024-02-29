@@ -63,6 +63,14 @@ def index():
         flash('Alumno registrado exitosamente')
     return render_template('index.html', form=create_form)
 
+@app.route('/ABC_Completo', methods=['POST', 'GET'])
+def ABCompleto():
+    alum_form = forms.UserForm2(request.form)
+    alumno=Alumnos.query.all()
+    
+    return render_template('ABC_Completo.html', alumno = alumno)
+
+
 
 @app.route("/static/bootstrap/css/<path:filename>")
 def send_css(filename):
