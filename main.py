@@ -70,6 +70,49 @@ def ABCompleto():
     
     return render_template('ABC_Completo.html', alumno = alumno)
 
+@app.route('/eliminar', methods=['POST', 'GET'])
+def eliminar():
+    create_form = forms.UserForm2(request.form)
+    if request.method=='GET':
+        id= request.args.get('id')
+        # SELECT * FROM alumnos WHERE id = id
+        alum1 = db.session.query(Alumnos).filter(Alumnos.id == id).first()
+        create_form.id.data = request.args.get('id')
+        create_form.nombre.data= alum1.nombre
+        create_form.apaterno.data= alum1.apaterno
+        create_form.email.data= alum1.email
+    if request.method=='POST':
+        id=create_form.id.data
+        alum =Alumnos.query.get(id)
+        #DELETE from alumnos WHERE id = id
+        db.session.delete(alum)
+        db.session.commit()
+        return redirect(url_for('ABCompleto'))
+    return render_template('eliminar.html',form=create_form)
+
+@app.route('/modificar', methods=['POST', 'GET'])
+def modificar():
+    create_form = forms.UserForm2(request.form)
+    if request.method=='GET':
+        id= request.args.get('id')
+        # SELECT * FROM alumnos WHERE id = id
+        alum1 = db.session.query(Alumnos).filter(Alumnos.id == id).first()
+        create_form.id.data = request.args.get('id')
+        create_form.nombre.data= alum1.nombre
+        create_form.apaterno.data= alum1.apaterno
+        create_form.email.data= alum1.email
+    if request.method=='POST':
+        id=create_form.id.data
+        alum1 = db.session.query(Alumnos).filter(Alumnos.id == id).first()
+        alum1.nombre = create_form.nombre.data
+        alum1.apaterno = create_form.apaterno.data
+        alum1.email = create_form.email.data
+        db.session.add(alum1)
+        db.session.commit()
+        return redirect(url_for('ABCompleto'))
+    return render_template('modificar.html',form=create_form)
+
+
 
 
 @app.route("/static/bootstrap/css/<path:filename>")
